@@ -14,7 +14,7 @@ TF_TRAIN_STEPS = int(os.getenv('TF_TRAIN_STEPS', 1000))
 MODEL_DIR = os.getenv('OUT_DIR', None)
 DATA_DIR = "{}/{}".format(DATUMS_PATH, DATASET_NAME)
 BATCH_SIZE = int(os.getenv('TF_BATCH_SIZE', 10))
-EPOCHS = os.getenv('TF_EPOCHS', 1)
+EPOCHS = int(os.getenv('TF_EPOCHS', 1))
 
 #========================================
 # CREATE DIRECTORIES AND GET IMAGE COUNTS
