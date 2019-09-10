@@ -234,4 +234,5 @@ history = model.fit(train_data_aug, train_labels_aug,
                     batch_size=batch_size,
                     epochs=epochs,
                     callbacks=[early_stop, checkpoint],
-                    validation_data=(test_data, test_labels))
+                    validation_data=(test_data, test_labels),
+                    class_weight={0:74, 1:26})
