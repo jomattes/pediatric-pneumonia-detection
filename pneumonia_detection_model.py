@@ -220,7 +220,8 @@ def precision_m(y_true, y_pred):
 
 # compile model
 early_stop = callbacks.EarlyStopping(monitor='val_loss', patience=5)
-checkpoint = callbacks.ModelCheckpoint(filepath='class_weight_model.h5',
+checkpoint = callbacks.ModelCheckpoint(filepath='class_weight_model.ckpt',
+                                       save_weights_only=True,
                                        monitor='val_loss',
                                        save_best_only=True)
 model.compile(loss='binary_crossentropy',
