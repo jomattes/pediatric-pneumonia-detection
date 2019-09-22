@@ -6,6 +6,7 @@ import random
 from keras.preprocessing.image import img_to_array, load_img
 import skimage as sk
 from keras import backend as K, models, layers, callbacks, optimizers
+import tensorflow as tf
 
 FLAGS = None
 DATUMS_PATH = os.getenv('DATUMS_PATH', None)
@@ -219,11 +220,11 @@ def precision_m(y_true, y_pred):
         return precision
 
 # compile model
-early_stop = callbacks.EarlyStopping(monitor='val_loss', patience=5)
-checkpoint = callbacks.ModelCheckpoint(filepath='class_weight_model.ckpt',
-                                       save_weights_only=True,
-                                       monitor='val_loss',
-                                       save_best_only=True)
+# early_stop = callbacks.EarlyStopping(monitor='val_loss', patience=5)
+# checkpoint = callbacks.ModelCheckpoint(filepath='class_weight_model.ckpt',
+#                                        save_weights_only=True,
+#                                        monitor='val_loss',
+#                                        save_best_only=True)
 model.compile(loss='binary_crossentropy',
               optimizer=optimizers.RMSprop(lr=1e-4),
               metrics=['acc', precision_m, recall_m])
@@ -234,6 +235,10 @@ epochs = EPOCHS
 history = model.fit(train_data_aug, train_labels_aug,
                     batch_size=batch_size,
                     epochs=epochs,
-                    callbacks=[early_stop, checkpoint],
+#                     callbacks=[early_stop, checkpoint],
                     validation_data=(test_data, test_labels),
                     class_weight={0:74, 1:26})
+
+# save model
+saver = tf.train.Saver()
+saver.save(K.get_session(), 'keras_model.ckpt')
