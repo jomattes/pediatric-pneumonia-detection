@@ -1,4 +1,6 @@
 import os
+import json
+import argparse
 import fnmatch
 import numpy as np
 import glob
@@ -8,6 +10,7 @@ import skimage as sk
 from keras import backend as K, models, layers, callbacks, optimizers
 import tensorflow as tf
 
+# load default values & directories
 FLAGS = None
 DATUMS_PATH = os.getenv('DATUMS_PATH', None)
 DATASET_NAME = os.getenv('DATASET_NAME', None)
@@ -17,8 +20,28 @@ DATA_DIR = "{}/{}".format(DATUMS_PATH, DATASET_NAME)
 BATCH_SIZE = int(os.getenv('TF_BATCH_SIZE', 10))
 EPOCHS = int(os.getenv('TF_EPOCHS', 1))
 
+# hyperparameter optimization
+fp = open(os.getenv('HP_TUNING_INFO_FILE', 'None'), 'r')
+hyperparams = json.loads(fp.read())
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--learning_rate', 
+                    type=float, 
+                    default=float(hyperparams['learning_rate']), 
+                    help='Learning rate for training.')
+parser.add_argument('--num_epochs', 
+                    type=int, 
+                    default=int(hyperparams['num_epochs']), 
+                    help='Number of epochs to train for.')
+
+global FLAGS
+FLAGS, unparsed = parser.parse_known_args()
+
+EPOCHS = FLAGS.num_epochs
+LEARNING_RATE = FLAGS.learning_rate
+
 #========================================
-# CREATE DIRECTORIES AND GET IMAGE COUNTS
+# FIND DIRECTORIES AND GET IMAGE COUNTS
 #========================================
 
 base_dir = os.path.join(DATA_DIR, 'chest_xray')
@@ -225,12 +248,14 @@ def precision_m(y_true, y_pred):
 #                                        save_weights_only=True,
 #                                        monitor='val_loss',
 #                                        save_best_only=True)
-model.compile(loss='binary_crossentropy',
-              optimizer=optimizers.RMSprop(lr=1e-4),
-              metrics=['acc', precision_m, recall_m])
 
 batch_size = BATCH_SIZE
 epochs = EPOCHS
+lr = LEARNING_RATE
+
+model.compile(loss='binary_crossentropy',
+              optimizer=optimizers.RMSprop(lr=lr),
+              metrics=['acc', precision_m, recall_m])
 
 history = model.fit(train_data_aug, train_labels_aug,
                     batch_size=batch_size,
