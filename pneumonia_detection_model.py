@@ -21,24 +21,24 @@ BATCH_SIZE = int(os.getenv('TF_BATCH_SIZE', 10))
 EPOCHS = int(os.getenv('TF_EPOCHS', 1))
 
 # hyperparameter optimization
-fp = open(os.getenv('HP_TUNING_INFO_FILE', 'None'), 'r')
-hyperparams = json.loads(fp.read())
+# fp = open(os.getenv('HP_TUNING_INFO_FILE', 'None'), 'r')
+# hyperparams = json.loads(fp.read())
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--learning_rate', 
-                    type=float, 
-                    default=float(hyperparams['learning_rate']), 
-                    help='Learning rate for training.')
-parser.add_argument('--num_epochs', 
-                    type=int, 
-                    default=int(hyperparams['num_epochs']), 
-                    help='Number of epochs to train for.')
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--learning_rate', 
+#                     type=float, 
+#                     default=float(hyperparams['learning_rate']), 
+#                     help='Learning rate for training.')
+# parser.add_argument('--num_epochs', 
+#                     type=int, 
+#                     default=int(hyperparams['num_epochs']), 
+#                     help='Number of epochs to train for.')
 
-global FLAGS
-FLAGS, unparsed = parser.parse_known_args()
+# global FLAGS
+# FLAGS, unparsed = parser.parse_known_args()
 
-EPOCHS = FLAGS.num_epochs
-LEARNING_RATE = FLAGS.learning_rate
+# EPOCHS = FLAGS.num_epochs
+# LEARNING_RATE = FLAGS.learning_rate
 
 #========================================
 # FIND DIRECTORIES AND GET IMAGE COUNTS
@@ -250,10 +250,11 @@ def precision_m(y_true, y_pred):
 #                                        monitor='val_loss',
 #                                        save_best_only=True)
 
-batch_size = BATCH_SIZE
+# batch_size = BATCH_SIZE
 # epochs = EPOCHS
 epochs = 25
-lr = LEARNING_RATE
+# lr = LEARNING_RATE
+lr = 1e-4
 
 model.compile(loss='binary_crossentropy',
               optimizer=optimizers.RMSprop(lr=lr),
