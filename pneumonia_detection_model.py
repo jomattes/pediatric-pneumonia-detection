@@ -44,7 +44,8 @@ LEARNING_RATE = FLAGS.learning_rate
 # FIND DIRECTORIES AND GET IMAGE COUNTS
 #========================================
 
-base_dir = os.path.join(DATA_DIR, 'chest_xray')
+# base_dir = os.path.join(DATA_DIR, 'chest_xray')
+base_dir = DATA_DIR
 train_dir = os.path.join(base_dir, 'train')
 val_dir = os.path.join(base_dir, 'val')
 test_dir = os.path.join(base_dir, 'test')
