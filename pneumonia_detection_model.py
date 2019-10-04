@@ -251,7 +251,8 @@ def precision_m(y_true, y_pred):
 #                                        save_best_only=True)
 
 batch_size = BATCH_SIZE
-epochs = EPOCHS
+# epochs = EPOCHS
+epochs = 25
 lr = LEARNING_RATE
 
 model.compile(loss='binary_crossentropy',
