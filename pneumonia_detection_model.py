@@ -35,7 +35,7 @@ parser.add_argument('--num_epochs',
                     help='Number of epochs to train for.')
 
 args = parser.parse_args()
-stage = args.stage
+# stage = args.stage
 
 # global FLAGS
 # FLAGS, unparsed = parser.parse_known_args()
