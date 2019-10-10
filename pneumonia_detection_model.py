@@ -27,11 +27,11 @@ EPOCHS = int(os.getenv('TF_EPOCHS', 1))
 parser = argparse.ArgumentParser()
 parser.add_argument('--learning_rate', 
                     type=float, 
-                    default=float(hyperparams['learning_rate']), 
+                    default=0.0001, 
                     help='Learning rate for training.')
 parser.add_argument('--num_epochs', 
                     type=int, 
-                    default=int(hyperparams['num_epochs']), 
+                    default=10, 
                     help='Number of epochs to train for.')
 
 args = parser.parse_args()
