@@ -1,11 +1,11 @@
 studyName: pneumonia
 owner: jm
 optimizationtype: maximize
-objectivevaluename: train_accuracy_1
+objectivevaluename: recall_m
 optimizationgoal: 0.99
 requestcount: 1
 metricsnames:
- - train_accuracy_1
+ - recall_m
 parameterconfigs:
  - name: --learning_rate
    parametertype: double
@@ -16,7 +16,7 @@ parameterconfigs:
    parametertype: int
    feasible:
      min: "1"
-     max: "100"
+     max: "25"
 suggestionSpec:
    suggestionAlgorithm: "random"
    requestNumber: 12

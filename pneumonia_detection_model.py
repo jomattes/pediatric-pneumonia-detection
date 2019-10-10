@@ -24,15 +24,18 @@ EPOCHS = int(os.getenv('TF_EPOCHS', 1))
 # fp = open(os.getenv('HP_TUNING_INFO_FILE', 'None'), 'r')
 # hyperparams = json.loads(fp.read())
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--learning_rate', 
-#                     type=float, 
-#                     default=float(hyperparams['learning_rate']), 
-#                     help='Learning rate for training.')
-# parser.add_argument('--num_epochs', 
-#                     type=int, 
-#                     default=int(hyperparams['num_epochs']), 
-#                     help='Number of epochs to train for.')
+parser = argparse.ArgumentParser()
+parser.add_argument('--learning_rate', 
+                    type=float, 
+                    default=float(hyperparams['learning_rate']), 
+                    help='Learning rate for training.')
+parser.add_argument('--num_epochs', 
+                    type=int, 
+                    default=int(hyperparams['num_epochs']), 
+                    help='Number of epochs to train for.')
+
+args = parser.parse_args()
+stage = args.stage
 
 # global FLAGS
 # FLAGS, unparsed = parser.parse_known_args()
@@ -250,12 +253,18 @@ def precision_m(y_true, y_pred):
 #                                        monitor='val_loss',
 #                                        save_best_only=True)
 
+# tensorboard callback
+logdir = MODEL_DIR + "/logs"
+tensorboard_callback = callbacks.TensorBoard(log_dir=logdir)
+
 # batch_size = BATCH_SIZE
-batch_size=BATCH_SIZE
+batch_size = BATCH_SIZE
 # epochs = EPOCHS
-epochs = 25
+# epochs = 25
 # lr = LEARNING_RATE
-lr = 1e-4
+# lr = 1e-4
+epochs = args.num_epochs
+lr = args.learning_rate
 
 model.compile(loss='binary_crossentropy',
               optimizer=optimizers.RMSprop(lr=lr),
@@ -264,6 +273,7 @@ model.compile(loss='binary_crossentropy',
 history = model.fit(train_data_aug, train_labels_aug,
                     batch_size=batch_size,
                     epochs=epochs,
+                    callbacks=[tensorboard_callback],
 #                     callbacks=[early_stop, checkpoint],
                     validation_data=(test_data, test_labels),
                     class_weight={0:74, 1:26})
