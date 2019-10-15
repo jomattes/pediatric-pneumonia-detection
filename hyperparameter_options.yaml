@@ -1,17 +1,17 @@
 studyName: pneumonia
-owner: jm
-optimizationtype: maximize
-objectivevaluename: recall_m
-optimizationgoal: 0.99
+owner: crd
+optimizationtype: minimize
+objectivevaluename: loss
+optimizationgoal: 0.01
 requestcount: 1
 metricsnames:
- - recall_m
+ - loss
 parameterconfigs:
  - name: --learning_rate
    parametertype: double
    feasible:
-     min: "1e-5"
-     max: "1e-1"
+     min: "0.0001"
+     max: "0.01"
  - name: --num_epochs
    parametertype: int
    feasible:
@@ -19,4 +19,4 @@ parameterconfigs:
      max: "25"
 suggestionSpec:
    suggestionAlgorithm: "random"
-   requestNumber: 12
+   requestNumber: 5
