@@ -283,4 +283,4 @@ fname = os.path.join(MODEL_DIR, 'keras_model')
 # saver = tf.train.Saver()
 # saver.save(K.get_session(), fname)
 
-model.save(fname, save_format='tf')
+model.save(fname)
