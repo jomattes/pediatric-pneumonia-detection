@@ -9,6 +9,7 @@ from keras.preprocessing.image import img_to_array, load_img
 import skimage as sk
 from keras import backend as K, models, layers, callbacks, optimizers
 import tensorflow as tf
+import dkube
 
 # load default values & directories
 FLAGS = None
@@ -278,17 +279,4 @@ history = model.fit(train_data_aug, train_labels_aug,
                     validation_data=(test_data, test_labels),
                     class_weight={0:74, 1:26})
 
-# save model
-# fname = os.path.join(MODEL_DIR, 'keras_model.h5')
-# saver = tf.train.Saver()
-# saver.save(K.get_session(), fname)
-
-# model.save(MODEL_DIR)
-
-# tf.estimator.DNNEstimator.export_saved_model(MODEL_DIR)
-
-print("model dir is " + MODEL_DIR)
-model_dir = MODEL_DIR + '/model/'
-tf.gfile.MkDir(model_dir)
-tmp_model_path = "/tmp/" + "pneumonia_model.h5"
-model.save(tmp_model_path)
+dkube.export_saved_model(path=MODEL_DIR, name="intentmodel")
