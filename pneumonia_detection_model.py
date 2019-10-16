@@ -279,4 +279,21 @@ history = model.fit(train_data_aug, train_labels_aug,
                     validation_data=(test_data, test_labels),
                     class_weight={0:74, 1:26})
 
-dkube.export_saved_model(path=MODEL_DIR, name="intentmodel")
+# save model
+tf.saved_model.save(model)
+
+# fname = os.path.join(MODEL_DIR, 'keras_model.h5')
+# saver = tf.train.Saver()
+# saver.save(K.get_session(), fname)
+
+# model.save(MODEL_DIR)
+
+# tf.estimator.DNNEstimator.export_saved_model(MODEL_DIR)
+
+# print("model dir is " + MODEL_DIR)
+# model_dir = MODEL_DIR + '/model/'
+# tf.gfile.MkDir(model_dir)
+# tmp_model_path = "/tmp/" + "pneumonia_model.h5"
+# model.save(tmp_model_path)
+
+# dkube.export_saved_model(path=export_path, name="intentmodel")
