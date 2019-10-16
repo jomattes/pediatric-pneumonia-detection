@@ -289,7 +289,6 @@ history = model.fit(train_data_aug, train_labels_aug,
 
 print("model dir is " + MODEL_DIR)
 model_dir = MODEL_DIR + '/model/'
-meta_dir = MODEL_DIR + '/meta/'
 tf.gfile.MkDir(model_dir)
-tmp_model_path = "/tmp/" + name + "pneumonia_model.h5"
+tmp_model_path = "/tmp/" + "pneumonia_model.h5"
 model.save(tmp_model_path)
