@@ -279,8 +279,8 @@ history = model.fit(train_data_aug, train_labels_aug,
                     class_weight={0:74, 1:26})
 
 # save model
-fname = os.path.join(MODEL_DIR, 'keras_model.h5')
+# fname = os.path.join(MODEL_DIR, 'keras_model.h5')
 # saver = tf.train.Saver()
 # saver.save(K.get_session(), fname)
 
-model.save(fname)
+model.save(MODEL_DIR)
