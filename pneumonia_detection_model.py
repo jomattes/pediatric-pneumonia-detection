@@ -280,7 +280,14 @@ history = model.fit(train_data_aug, train_labels_aug,
                     class_weight={0:74, 1:26})
 
 # save model
-tf.saved_model.save(K.get_session(), MODEL_DIR)
+if MODEL_DIR is not None:
+    image = tf.placeholder(tf.float32, [None, 256, 256])
+    input_fn = tf.estimator.export.build_raw_serving_input_receiver_fn({'image': image,
+                                                                       })
+    export_fn = input_fn
+    tf.estimator.FinalExporter(MODEL_DIR, serving_input_receiver_fn=input_fn)
+
+# tf.saved_model.save(K.get_session(), MODEL_DIR)
 
 # fname = os.path.join(MODEL_DIR, 'keras_model.h5')
 # saver = tf.train.Saver()
